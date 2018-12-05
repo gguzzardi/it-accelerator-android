@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Convertidor de Millas</string>
+    <string name="label_convertidor">Convertidor</string>
+    <string name="label_millas">Millas a kilometros</string>
+    <string name="label_km">kilometers</string>
+    <string name="action_convertir">Convertir</string>
+</resources>
