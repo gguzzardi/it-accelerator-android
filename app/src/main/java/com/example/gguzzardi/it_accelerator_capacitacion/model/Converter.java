@@ -7,20 +7,17 @@ public class Converter {
     private double mKilometers;
     private double mMiles;
 
+    public interface ConverterListener {
+        void convertValue();
+        void onValueTyped(double value);
+    }
+
     public void convert() {
         mKilometers = mMiles * MILES_TO_KILOMETERS_MULTIPLIER;
     }
 
     public double getKilometers() {
         return mKilometers;
-    }
-
-    public void setKilometers(double mKilometers) {
-        this.mKilometers = mKilometers;
-    }
-
-    public double getMiles() {
-        return mMiles;
     }
 
     public void setMiles(double mMiles) {

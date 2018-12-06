@@ -1,17 +1,29 @@
 package com.example.gguzzardi.it_accelerator_capacitacion.presenters;
 
-import com.example.gguzzardi.it_accelerator_capacitacion.interactors.ConverterInteractor;
-import com.example.gguzzardi.it_accelerator_capacitacion.interfaces.ConverterView;
+import com.example.gguzzardi.it_accelerator_capacitacion.model.Converter;
 
-public class ConverterPresenter implements ConverterInteractor.OnValueConvertedListener {
+public class ConverterPresenter implements Converter.ConverterListener {
 
-    private ConverterView mView;
-    private ConverterInteractor mInteractor;
+    private final ConverterView mView;
+    private final Converter mConverter;
 
-    @Override
-    public void onValueConverted() {
-
+    public interface ConverterView {
+        void showKilometersValue(double value);
     }
 
-    
+    public ConverterPresenter(ConverterView view, Converter converter) {
+        mView = view;
+        mConverter = converter;
+    }
+
+    @Override
+    public void convertValue() {
+        mConverter.convert();
+        mView.showKilometersValue(mConverter.getKilometers());
+    }
+
+    @Override
+    public void onValueTyped(double value) {
+        mConverter.setMiles(value);
+    }
 }

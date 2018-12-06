@@ -15,13 +15,14 @@ import android.widget.TextView;
 
 import com.example.gguzzardi.it_accelerator_capacitacion.R;
 import com.example.gguzzardi.it_accelerator_capacitacion.model.Converter;
+import com.example.gguzzardi.it_accelerator_capacitacion.presenters.ConverterPresenter;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ConverterPresenter.ConverterView {
     private EditText mMilesEditText;
     private TextView mKilometersTextView;
     private LinearLayout mResultLayout;
 
-    private Converter mConverter;
+    private ConverterPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         mResultLayout = findViewById(R.id.layout_result);
         mResultLayout.setVisibility(View.INVISIBLE);
 
-        mConverter = new Converter();
+        mPresenter = new ConverterPresenter(this, new Converter());
 
         setupMilesEditText();
         setupConvertButton();
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         convertButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                convertToKilometers();
+                mPresenter.convertValue();
                 hideKeyboard(MainActivity.this);
             }
         });
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    convertToKilometers();
+                    mPresenter.convertValue();
                     return true;
                 }
                 return false;
@@ -74,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
                 String milesText = mMilesEditText.getText().toString();
                 if (milesText.isEmpty()) return;
                 double milesValue = Double.parseDouble(milesText);
-                mConverter.setMiles(milesValue);
-                convertToKilometers();
+                mPresenter.onValueTyped(milesValue);
+                mPresenter.convertValue();
             }
 
             @Override
@@ -84,15 +85,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void convertToKilometers() {
-        mResultLayout.setVisibility(View.VISIBLE);
-        mConverter.convert();
-        mKilometersTextView.setText(String.format("%.2f", mConverter.getKilometers()));
-        mConverter.getKilometers();
-    }
-
-
-    public static void hideKeyboard(Activity activity) {
+    private void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         View view = activity.getCurrentFocus();
         if (view == null) {
@@ -101,4 +94,9 @@ public class MainActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    @Override
+    public void showKilometersValue(double value) {
+        mResultLayout.setVisibility(View.VISIBLE);
+        mKilometersTextView.setText(String.format("%.2f", value));
+    }
 }
