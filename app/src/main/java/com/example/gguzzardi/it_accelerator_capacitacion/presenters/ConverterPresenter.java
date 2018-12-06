@@ -1,6 +1,7 @@
 package com.example.gguzzardi.it_accelerator_capacitacion.presenters;
 
 import com.example.gguzzardi.it_accelerator_capacitacion.model.Converter;
+import com.example.gguzzardi.it_accelerator_capacitacion.model.exceptions.CannotBeNegativeException;
 
 public class ConverterPresenter implements Converter.ConverterListener {
 
@@ -20,6 +21,10 @@ public class ConverterPresenter implements Converter.ConverterListener {
 
     @Override
     public void onValueTyped(double value) {
-        mConverter.setMiles(value);
+        try {
+            mConverter.setMiles(value);
+        } catch (CannotBeNegativeException e) {
+            mView.onValueTypedError();
+        }
     }
 }

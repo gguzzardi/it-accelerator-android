@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gguzzardi.it_accelerator_capacitacion.R;
 import com.example.gguzzardi.it_accelerator_capacitacion.model.Converter;
@@ -101,5 +102,10 @@ public class MainActivity extends AppCompatActivity implements ConverterView {
     public void showKilometersValue(double value) {
         mResultLayout.setVisibility(View.VISIBLE);
         mKilometersTextView.setText(String.format("%.2f", value));
+    }
+
+    @Override
+    public void onValueTypedError() {
+        Toast.makeText(this, "Miles cannot be negative", Toast.LENGTH_SHORT).show();
     }
 }

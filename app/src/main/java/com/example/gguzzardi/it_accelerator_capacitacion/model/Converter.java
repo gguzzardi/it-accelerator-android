@@ -1,5 +1,7 @@
 package com.example.gguzzardi.it_accelerator_capacitacion.model;
 
+import com.example.gguzzardi.it_accelerator_capacitacion.model.exceptions.CannotBeNegativeException;
+
 public class Converter {
 
     private static final double MILES_TO_KILOMETERS_MULTIPLIER = 1.60934;
@@ -20,7 +22,8 @@ public class Converter {
         return mKilometers;
     }
 
-    public void setMiles(double mMiles) {
+    public void setMiles(double mMiles) throws CannotBeNegativeException {
+        if (mMiles < 0) throw new CannotBeNegativeException();
         this.mMiles = mMiles;
     }
 }
