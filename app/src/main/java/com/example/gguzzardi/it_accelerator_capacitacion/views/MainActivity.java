@@ -16,8 +16,11 @@ import android.widget.TextView;
 import com.example.gguzzardi.it_accelerator_capacitacion.R;
 import com.example.gguzzardi.it_accelerator_capacitacion.model.Converter;
 import com.example.gguzzardi.it_accelerator_capacitacion.presenters.ConverterPresenter;
+import com.example.gguzzardi.it_accelerator_capacitacion.presenters.ConverterView;
 
-public class MainActivity extends AppCompatActivity implements ConverterPresenter.ConverterView {
+import java.util.Locale;
+
+public class MainActivity extends AppCompatActivity implements ConverterView {
     private EditText mMilesEditText;
     private TextView mKilometersTextView;
     private LinearLayout mResultLayout;

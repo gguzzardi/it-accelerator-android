@@ -7,10 +7,6 @@ public class ConverterPresenter implements Converter.ConverterListener {
     private final ConverterView mView;
     private final Converter mConverter;
 
-    public interface ConverterView {
-        void showKilometersValue(double value);
-    }
-
     public ConverterPresenter(ConverterView view, Converter converter) {
         mView = view;
         mConverter = converter;
